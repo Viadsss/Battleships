@@ -1,51 +1,72 @@
-import Ship from "../ship";
+import Ship from "../scripts/ship";
 
 describe("Ship Test", () => {
-  // Test 1: ship is not hit
-  test("Ship is not hit", () => {
-    const ship = new Ship(3);
+  let ship;
+
+  beforeEach(() => {
+    ship = new Ship(3);
+  });
+
+  // Test 1
+  it("should be initialized correctly", () => {
     expect(ship.length).toBe(3);
     expect(ship.hitCount).toBe(0);
-    expect(ship.isSunk()).toBe(false);
+    expect(ship.direction).toBe(1);
+    expect(ship.position).toEqual([0, 0, 0]);
   });
 
-  // Test 2: ship is partially hit
-  test("Ship is partially hit", () => {
-    const ship = new Ship(5);
-    ship.hit();
-    ship.hit();
-    expect(ship.length).toBe(5);
-    expect(ship.hitCount).toBe(2);
-    expect(ship.isSunk()).toBe(false);
+  // Test 2
+  it("should register a hit and update hitCount and position", () => {
+    ship.hit(1);
+    expect(ship.length).toBe(3);
+    expect(ship.hitCount).toBe(1);
+    expect(ship.direction).toBe(1);
+    expect(ship.position).toEqual([0, 1, 0]);
   });
 
-  // Test 3: Ship is fully hit and sunk
-  test("Ship is fully hit and sunk", () => {
-    const ship = new Ship(2);
-    ship.hit();
-    ship.hit();
-    expect(ship.length).toBe(2);
-    expect(ship.hitCount).toBe(2);
+  it("should not allow hitting out-of-bounds positions", () => {
+    // Try hitting positions outside the ship's length
+    ship.hit(-1);
+    ship.hit(3);
+    expect(ship.hitCount).toBe(0);
+    expect(ship.position).toEqual([0, 0, 0]);
+  });
+
+  // Test 3
+  it("should not register a hit for the same position twice", () => {
+    ship.hit(2);
+    ship.hit(2);
+    expect(ship.length).toBe(3);
+    expect(ship.hitCount).toBe(1);
+    expect(ship.direction).toBe(1);
+    expect(ship.position).toEqual([0, 0, 1]);
+  });
+
+  // Test 4
+  it("should correctly check if the ship is hit", () => {
+    expect(ship.isHit()).toBe(false);
+    ship.hit(1);
+    expect(ship.isHit()).toBe(true);
+  });
+
+  // Tesst 5
+  it("should correcty check if the ship is sunk", () => {
+    expect(ship.isSunk()).toBe(false);
+    ship.hit(0);
+    ship.hit(1);
+    ship.hit(2);
+    expect(ship.isSunk()).toBe(true);
+    // Hitting it again should not change isSunk status
+    ship.hit(0);
     expect(ship.isSunk()).toBe(true);
   });
 
-  // Test case 4: Hitting a ship more times than its length
-  test("Hitting a ship more times than its length", () => {
-    const ship = new Ship(3);
-    ship.hit();
-    ship.hit();
-    ship.hit();
-    ship.hit(); // Extra hit
-    expect(ship.length).toBe(3);
-    expect(ship.hitCount).toBe(4);
-    expect(ship.isSunk()).toBe(false);
-  });
-
-  // Test case 5: Creating a ship with default parameters
-  test("Creating a ship with default parameters", () => {
-    const ship = new Ship();
-    expect(ship.length).toBe(1); // Default length
-    expect(ship.hitCount).toBe(0); // Default hitCount
-    expect(ship.isSunk()).toBe(false);
+  // Test 6
+  it("should toggle the ship direction", () => {
+    expect(ship.getDirection()).toBe(1);
+    ship.updateDirection();
+    expect(ship.getDirection()).toBe(0);
+    ship.updateDirection();
+    expect(ship.getDirection()).toBe(1);
   });
 });
