@@ -7,7 +7,7 @@ describe("Ship Test", () => {
     ship = new Ship(3);
   });
 
-  // Test 1
+  // Test 1 : Initialization
   it("should be initialized correctly", () => {
     expect(ship.length).toBe(3);
     expect(ship.hitCount).toBe(0);
@@ -15,7 +15,7 @@ describe("Ship Test", () => {
     expect(ship.position).toEqual([0, 0, 0]);
   });
 
-  // Test 2
+  // Test 2 : hit function
   it("should register a hit and update hitCount and position", () => {
     ship.hit(1);
     expect(ship.length).toBe(3);
@@ -32,7 +32,6 @@ describe("Ship Test", () => {
     expect(ship.position).toEqual([0, 0, 0]);
   });
 
-  // Test 3
   it("should not register a hit for the same position twice", () => {
     ship.hit(2);
     ship.hit(2);
@@ -42,14 +41,14 @@ describe("Ship Test", () => {
     expect(ship.position).toEqual([0, 0, 1]);
   });
 
-  // Test 4
+  // Test 3: isHit function
   it("should correctly check if the ship is hit", () => {
     expect(ship.isHit()).toBe(false);
     ship.hit(1);
     expect(ship.isHit()).toBe(true);
   });
 
-  // Tesst 5
+  // Tesst 4: isSunk function
   it("should correcty check if the ship is sunk", () => {
     expect(ship.isSunk()).toBe(false);
     ship.hit(0);
@@ -61,7 +60,7 @@ describe("Ship Test", () => {
     expect(ship.isSunk()).toBe(true);
   });
 
-  // Test 6
+  // Test 5: updateDirection function
   it("should toggle the ship direction", () => {
     expect(ship.getDirection()).toBe(1);
     ship.updateDirection();
