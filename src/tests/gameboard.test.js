@@ -26,7 +26,7 @@ describe("Gameboard Test", () => {
 
   // Test 2: placeShip function
   it("should be place a ship on the board correctly", () => {
-    board.placeShip(0, 0, 3);
+    board.placeShip(0, 0, 3, 0);
 
     expect(board.getBoard()).toEqual([
       ["SHIP", "SHIP", "SHIP", "", "", "", "", "", "", ""],
