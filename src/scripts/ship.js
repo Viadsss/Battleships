@@ -2,7 +2,7 @@ class Ship {
   constructor(length) {
     this.length = length;
     this.hitCount = 0;
-    this.direction = 1; // 1 is horizontal, 0 is vertical
+    this.direction = 0; // 0 is horizontal, 1 is vertical
     this.position = Array(length).fill(0);
   }
 

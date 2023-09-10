@@ -11,7 +11,7 @@ describe("Ship Test", () => {
   it("should be initialized correctly", () => {
     expect(ship.length).toBe(3);
     expect(ship.hitCount).toBe(0);
-    expect(ship.direction).toBe(1);
+    expect(ship.direction).toBe(0);
     expect(ship.position).toEqual([0, 0, 0]);
   });
 
@@ -20,7 +20,7 @@ describe("Ship Test", () => {
     ship.hit(1);
     expect(ship.length).toBe(3);
     expect(ship.hitCount).toBe(1);
-    expect(ship.direction).toBe(1);
+    expect(ship.direction).toBe(0);
     expect(ship.position).toEqual([0, 1, 0]);
   });
 
@@ -37,7 +37,7 @@ describe("Ship Test", () => {
     ship.hit(2);
     expect(ship.length).toBe(3);
     expect(ship.hitCount).toBe(1);
-    expect(ship.direction).toBe(1);
+    expect(ship.direction).toBe(0);
     expect(ship.position).toEqual([0, 0, 1]);
   });
 
@@ -62,10 +62,10 @@ describe("Ship Test", () => {
 
   // Test 5: updateDirection function
   it("should toggle the ship direction", () => {
-    expect(ship.getDirection()).toBe(1);
-    ship.updateDirection();
     expect(ship.getDirection()).toBe(0);
     ship.updateDirection();
     expect(ship.getDirection()).toBe(1);
+    ship.updateDirection();
+    expect(ship.getDirection()).toBe(0);
   });
 });

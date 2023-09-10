@@ -11,15 +11,6 @@ class Player {
     }
 
     const result = this.enemyGameboard.receiveAttack(x, y);
-
-    // if (result === "hit") {
-    //   console.log(`${this.name} hit at (${x}, ${y})!`);
-    // } else if (result === "sunk") {
-    //   console.log(`${this.name} sank a ship at (${x}, ${y})!`);
-    // } else {
-    //   console.log(`${this.name} missed at (${x}, ${y}).`);
-    // }
-
     return result;
   }
 
