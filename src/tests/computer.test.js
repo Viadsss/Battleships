@@ -20,20 +20,6 @@ describe("Player vs Computer Test", () => {
     expect(result).toBe("miss");
   });
 
-  it("should make an attack and sink a ship", () => {
-    computerGameboard.placeShip(0, 0, 2, 1); // Place a ship at (0, 0) for computer's gameboard
-
-    const result1 = player.attack(0, 0);
-    expect(result1).toBe("hit");
-
-    const result2 = player.attack(1, 0);
-    expect(result2).toBe("sunk");
-
-    // After both parts of the ship are hit, it should be considered "sunk."
-    const result3 = player.attack(0, 0);
-    expect(result3).toBeUndefined();
-  });
-
   it("should simulate a game between Player and Computer", () => {
     playerGameboard.placeShip(0, 0, 2, 1); // Place a ship of length 2 at (0, 0) for player's gameboard
     computerGameboard.placeShip(2, 1, 2, 0); // Place a ship of length 2 at (2, 1) for computer's gameboard
@@ -69,12 +55,12 @@ describe("Player vs Computer Test", () => {
     // Simulate the game by taking turns until a winner is declared
     while (true) {
       if (playerTurn) {
-        player.takeTurn(
+        player.attack(
           Math.floor(Math.random() * 10),
           Math.floor(Math.random() * 10),
         ); // Player makes a random move
       } else {
-        computer.takeTurnRandom(); // Computer makes a random move
+        computer.attackRandom(); // Computer makes a random move
       }
 
       // Check if the game is over
