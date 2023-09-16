@@ -103,7 +103,10 @@ class Gameboard {
         this.ships[shipIndex].ship.hit(coordIndex);
 
         if (this.ships[shipIndex].ship.isSunk()) {
-          return "sunk";
+          this.ships[shipIndex].coords.forEach((coord) => {
+            const [shipX, shipY] = coord;
+            this.board[shipX][shipY] = "sunk";
+          });
         }
       }
     }

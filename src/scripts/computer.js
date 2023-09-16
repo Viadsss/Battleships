@@ -25,15 +25,6 @@ class Computer {
 
     return result;
   }
-
-  takeTurnRandom() {
-    this.attackRandom();
-
-    // Check for game over condition
-    if (this.enemyGameboard.gameover()) {
-      console.log(`${this.name} wins the game!`);
-    }
-  }
 }
 
 export default Computer;
