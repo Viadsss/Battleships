@@ -3,12 +3,24 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <link rel="shortcut icon" href="./assets/battleship-logo.png" type="image/x-icon">
+    <title>Battleship</title>
   </head>
   <body>
     <div class="content">
-      <div class="gameboard-container" id="playerContainer"></div>
-      <div class="gameboard-container" id="computerContainer"></div>
+      <header class="header">
+        <div class="logo-div">
+          <img class="logo-img" src="./assets/battleship-logo.png">
+          <img class="logo-text" src="./assets/battleship-text-logo.svg">
+        </div>
+        <div class="credits">
+          <div>created by <a href="https://bio.link/viads" target="_blank">Viads</a></div>
+        </div>
+      </header>
+      <main class="main">
+        <div class="gameboard-container" id="playerContainer"></div>
+        <div class="gameboard-container" id="computerContainer"></div>
+      </main>
     </div>
     <script src="./bundle.js"></script>
   </body>

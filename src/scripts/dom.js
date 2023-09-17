@@ -6,6 +6,9 @@ const assets = {
   hit: "../../dist/assets/hit.svg",
   miss: "../../dist/assets/miss.svg",
   sunk: "../../dist/assets/sunk.svg",
+  logoImg: "../../dist/assets/battleship-logo.png",
+  logoText: "../../dist/assets/battleship-text-logo.svg",
+  githubLogo: "../../dist/assets/github-logo.svg",
 };
 
 function gameboardContainer(id) {
@@ -97,67 +100,47 @@ function updateGameboard(board, id, hideShips = false) {
     const row = parseInt(cell.dataset.row, 10);
     const col = parseInt(cell.dataset.col, 10);
 
-    const imageElement = document.createElement("img");
+    const img = document.createElement("img");
 
     cell.innerHTML = "";
-
-    // if (board[row][col] === "SHIP") {
-    //   if (hideShips) {
-    //     cell.textContent = board[row][col];
-    //   } else {
-    //     img.src = assets.ship;
-    //     img.classList.add("ship");
-    //     cell.appendChild(img);
-    //   }
-    // } else if (board[row][col] === "hit") {
-    //   img.src = assets.hit;
-    //   cell.appendChild(img);
-    // } else if (board[row][col] === "miss") {
-    //   img.src = assets.miss;
-    //   cell.appendChild(img);
-    // } else if (board[row][col] === "sunk") {
-    //   img.src = assets.ship;
-    //   cell.appendChild(img);
-    // }
 
     // computer Board
     if (hideShips) {
       if (board[row][col] === "SHIP") {
         // display nothing on ship
       } else if (board[row][col] === "miss") {
-        imageElement.src = assets.miss;
-        imageElement.alt = "miss";
+        img.src = assets.miss;
+        img.alt = "miss";
         console.log("computer board miss");
       } else if (board[row][col] === "hit") {
-        imageElement.src = assets.hit;
-        imageElement.alt = "hit";
+        img.src = assets.hit;
+        img.alt = "hit";
       } else if (board[row][col] === "sunk") {
-        imageElement.src = assets.sunk;
-        imageElement.alt = "sunk";
-        imageElement.classList.add("sunk");
+        img.src = assets.sunk;
+        img.alt = "sunk";
+        img.classList.add("sunk");
       }
 
       // player Board
     } else {
       if (board[row][col] === "SHIP") {
-        imageElement.src = assets.ship;
-        imageElement.alt = "SHIP";
-        imageElement.classList.add("ship");
+        img.src = assets.ship;
+        img.alt = "SHIP";
+        img.classList.add("ship");
       } else if (board[row][col] === "hit") {
-        imageElement.src = assets.sunk;
-        imageElement.alt = "hit";
+        img.src = assets.sunk; // to make the hit overlay the ship
+        img.alt = "hit";
       } else if (board[row][col] === "miss") {
-        imageElement.src = assets.miss;
-        imageElement.alt = "miss";
+        img.src = assets.miss;
+        img.alt = "miss";
       } else if (board[row][col] === "sunk") {
-        imageElement.src = assets.sunk;
-        imageElement.alt = "sunk";
-        imageElement.classList.add("sunk");
+        img.src = assets.sunk;
+        img.alt = "sunk";
+        img.classList.add("sunk");
       }
     }
 
-    // Append the image element to the cell
-    cell.appendChild(imageElement);
+    cell.appendChild(img);
   });
 }
 
@@ -168,12 +151,10 @@ function clickHandler(e) {
     const row = parseInt(cell.dataset.row, 10);
     const col = parseInt(cell.dataset.col, 10);
 
-    // Check if the cell has already been clicked
     if (!cell.classList.contains("clicked")) {
-      // lets try to add && if playerTurn
       console.log("Row:", row, "Col:", col);
       handlePlayerMove(row, col); // callback
-      cell.classList.add("clicked"); // Mark the cell as clicked
+      cell.classList.add("clicked");
     }
   }
 }
@@ -207,7 +188,7 @@ function overlayContainers() {
 
     playerOverlay.classList.toggle("hide");
     computerOverlay.classList.toggle("hide");
-  }, 1000);
+  }, 500);
 }
 
 export {

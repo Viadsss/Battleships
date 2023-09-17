@@ -65,12 +65,12 @@ describe("Player vs Computer Test", () => {
 
       // Check if the game is over
       if (computerGameboard.gameover()) {
-        console.log("Player wins the game!");
+        // console.log("Player wins the game!");
         break;
       }
 
       if (playerGameboard.gameover()) {
-        console.log("Computer wins the game!");
+        // console.log("Computer wins the game!");
         break;
       }
 
