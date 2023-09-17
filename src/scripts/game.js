@@ -7,6 +7,7 @@ import {
   updateGameboard,
   addCellClickListener,
   removeCellClickListener,
+  overlayContainers,
 } from "./dom";
 
 const boardSize = 10;
@@ -109,6 +110,7 @@ function handlePlayerMove(row, col) {
 
   playerTurn = false;
   removeCellClickListener();
+  overlayContainers();
 
   setTimeout(() => {
     handleComputerMove();
@@ -137,6 +139,7 @@ function handleComputerMove() {
     }, 2000);
   } else {
     playerTurn = true;
+    overlayContainers();
     addCellClickListener(handlePlayerMove);
   }
 }

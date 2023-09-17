@@ -1,6 +1,13 @@
 import { handlePlayerMove } from "./game";
 // importing for the callback of clickHandler to response for Player Move
 
+const assets = {
+  ship: "../../dist/assets/ship.svg",
+  hit: "../../dist/assets/hit.svg",
+  miss: "../../dist/assets/miss.svg",
+  sunk: "../../dist/assets/sunk.svg",
+};
+
 function gameboardContainer(id) {
   const container = document.getElementById(id);
   const info = document.createElement("div");
@@ -43,10 +50,18 @@ function gameboardContainer(id) {
     gameboard.id = "computerGameboard";
   }
 
+  const overlay = document.createElement("div");
+  overlay.classList.add("overlay");
+
+  if (container.id === "computerContainer") {
+    overlay.classList.add("hide");
+  }
+
   container.appendChild(info);
   container.appendChild(letters);
   container.appendChild(numbers);
   container.appendChild(gameboard);
+  container.appendChild(overlay);
 }
 
 function createGameboard(id, size) {
@@ -60,6 +75,11 @@ function createGameboard(id, size) {
     for (let j = 0; j < size; j++) {
       const cell = document.createElement("div");
       cell.classList.add("cell");
+
+      if (id === "computerGameboard") {
+        cell.classList.add("computer-cell");
+      }
+
       cell.dataset.row = i;
       cell.dataset.col = j;
 
@@ -71,16 +91,74 @@ function createGameboard(id, size) {
 function updateGameboard(board, id, hideShips = false) {
   const gameboard = document.getElementById(id);
 
-  if (gameboard) {
-    const cells = gameboard.querySelectorAll(".cell");
+  const cells = gameboard.querySelectorAll(".cell");
 
-    cells.forEach((cell) => {
-      const row = parseInt(cell.dataset.row, 10);
-      const col = parseInt(cell.dataset.col, 10);
+  cells.forEach((cell) => {
+    const row = parseInt(cell.dataset.row, 10);
+    const col = parseInt(cell.dataset.col, 10);
 
-      cell.textContent = board[row][col];
-    });
-  }
+    const imageElement = document.createElement("img");
+
+    cell.innerHTML = "";
+
+    // if (board[row][col] === "SHIP") {
+    //   if (hideShips) {
+    //     cell.textContent = board[row][col];
+    //   } else {
+    //     img.src = assets.ship;
+    //     img.classList.add("ship");
+    //     cell.appendChild(img);
+    //   }
+    // } else if (board[row][col] === "hit") {
+    //   img.src = assets.hit;
+    //   cell.appendChild(img);
+    // } else if (board[row][col] === "miss") {
+    //   img.src = assets.miss;
+    //   cell.appendChild(img);
+    // } else if (board[row][col] === "sunk") {
+    //   img.src = assets.ship;
+    //   cell.appendChild(img);
+    // }
+
+    // computer Board
+    if (hideShips) {
+      if (board[row][col] === "SHIP") {
+        // display nothing on ship
+      } else if (board[row][col] === "miss") {
+        imageElement.src = assets.miss;
+        imageElement.alt = "miss";
+        console.log("computer board miss");
+      } else if (board[row][col] === "hit") {
+        imageElement.src = assets.hit;
+        imageElement.alt = "hit";
+      } else if (board[row][col] === "sunk") {
+        imageElement.src = assets.sunk;
+        imageElement.alt = "sunk";
+        imageElement.classList.add("sunk");
+      }
+
+      // player Board
+    } else {
+      if (board[row][col] === "SHIP") {
+        imageElement.src = assets.ship;
+        imageElement.alt = "SHIP";
+        imageElement.classList.add("ship");
+      } else if (board[row][col] === "hit") {
+        imageElement.src = assets.sunk;
+        imageElement.alt = "hit";
+      } else if (board[row][col] === "miss") {
+        imageElement.src = assets.miss;
+        imageElement.alt = "miss";
+      } else if (board[row][col] === "sunk") {
+        imageElement.src = assets.sunk;
+        imageElement.alt = "sunk";
+        imageElement.classList.add("sunk");
+      }
+    }
+
+    // Append the image element to the cell
+    cell.appendChild(imageElement);
+  });
 }
 
 function clickHandler(e) {
@@ -120,10 +198,23 @@ function removeCellClickListener() {
   }
 }
 
+function overlayContainers() {
+  setTimeout(() => {
+    const playerContainer = document.getElementById("playerContainer");
+    const computerContainer = document.getElementById("computerContainer");
+    const playerOverlay = playerContainer.querySelector(".overlay");
+    const computerOverlay = computerContainer.querySelector(".overlay");
+
+    playerOverlay.classList.toggle("hide");
+    computerOverlay.classList.toggle("hide");
+  }, 1000);
+}
+
 export {
   gameboardContainer,
   createGameboard,
   updateGameboard,
   addCellClickListener,
   removeCellClickListener,
+  overlayContainers,
 };
