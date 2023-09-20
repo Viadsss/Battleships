@@ -53,13 +53,13 @@ function changeDirection(direction) {
   rotateBtn.addEventListener("click", () => {
     direction = (direction + 1) % 2;
 
-    console.log(direction);
+    return direction;
   });
 }
 
 function initPlaceShip() {
   let currentIndex = 0; // Track the current ship index
-  let shipDirection = 0; // 0 for Horizontal, 1 for Vertical
+  let currentDirection = 0; // 0 for Horizontal, 1 for Vertical
 
   initPlaceShipPage();
 
@@ -70,7 +70,7 @@ function initPlaceShip() {
   displayMessage(currentIndex); // dependent on currentShip.name
   createShipElements();
   highlightShip(currentIndex); // dependent on currentIndex
-  changeDirection(shipDirection);
+  currentDirection = changeDirection(currentDirection);
 }
 
 export default initPlaceShip;
