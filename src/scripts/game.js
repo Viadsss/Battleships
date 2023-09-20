@@ -156,6 +156,5 @@ function initGame() {
   addCellClickListener(handlePlayerMove);
 }
 
-initGame();
 
-export { handlePlayerMove };
+export { handlePlayerMove, initGame };

@@ -1,2 +1,4 @@
 import "./styles.css";
-import "./scripts/game";
+import { initGame } from "./scripts/game.js";
+
+initGame();
