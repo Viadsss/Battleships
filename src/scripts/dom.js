@@ -11,6 +11,21 @@ const assets = {
   githubLogo: "../../dist/assets/github-logo.svg",
 };
 
+function initGamePage() {
+  const main = document.querySelector(".main");
+  const playerContainer = document.createElement("div");
+  const computerContainer = document.createElement("div");
+
+  playerContainer.classList.add("gameboard-container");
+  computerContainer.classList.add("gameboard-container");
+
+  playerContainer.id = "playerContainer";
+  computerContainer.id = "computerContainer";
+
+  main.appendChild(playerContainer);
+  main.appendChild(computerContainer);
+}
+
 function gameboardContainer(id) {
   const container = document.getElementById(id);
   const info = document.createElement("div");
@@ -192,6 +207,7 @@ function overlayContainers() {
 }
 
 export {
+  initGamePage,
   gameboardContainer,
   createGameboard,
   updateGameboard,

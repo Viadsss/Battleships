@@ -2,6 +2,7 @@ import Gameboard from "./gameboard";
 import Player from "./player";
 import Computer from "./computer";
 import {
+  initGamePage,
   gameboardContainer,
   createGameboard,
   updateGameboard,
@@ -145,6 +146,8 @@ function handleComputerMove() {
 }
 
 function initGame() {
+  initGamePage();
+  
   gameboardContainer("playerContainer");
   gameboardContainer("computerContainer");
   createGameboard("playerGameboard", boardSize);
@@ -155,6 +158,5 @@ function initGame() {
 
   addCellClickListener(handlePlayerMove);
 }
-
 
 export { handlePlayerMove, initGame };
