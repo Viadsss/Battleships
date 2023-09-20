@@ -21,7 +21,7 @@ body {
 
 .content {
   min-height: 100vh;
-  color: #f2f3f5;
+  background-color: #f2f3f5;
 }
 
 .header {
@@ -68,6 +68,50 @@ body {
     rgba(0, 0, 0, 0.23) 0px 3px 6px;
   border-radius: 1rem;
 }
+
+/* start of exclusive styling for placeShip.js */
+
+.ships-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  background-color: white;
+  padding: 1rem 3rem;
+  box-shadow:
+    rgba(0, 0, 0, 0.16) 0px 3px 6px,
+    rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  border-radius: 1rem;
+}
+
+.ships {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.rotate-btn {
+  font-family: Jost;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  margin-top: 1rem;
+  cursor: pointer;
+}
+
+.fade {
+  opacity: 40%;
+}
+
+.highlight {
+  background: #f05;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+}
+
+/* end of exclusive styling for placeShip.js */
 
 .info-player {
   grid-column: 1 / span 2;
@@ -181,6 +225,10 @@ body {
 
   #computerContainer {
     justify-self: start;
+  }
+
+  #shipsContainer {
+    justify-self: center;
   }
 }
 

@@ -11,6 +11,36 @@ const assets = {
   githubLogo: "../../dist/assets/github-logo.svg",
 };
 
+function initPlaceShipPage() {
+  const main = document.querySelector(".main");
+  const playerContainer = document.createElement("div");
+  const shipsContainer = document.createElement("div");
+  const messageDiv = document.createElement("div");
+  const shipsDiv = document.createElement("div");
+  const rotateShipBtn = document.createElement("button");
+
+  playerContainer.classList.add("gameboard-container");
+  playerContainer.id = "playerContainer";
+
+  shipsContainer.classList.add("ships-container");
+  shipsContainer.id = "shipsContainer";
+
+  main.textContent = "";
+
+  main.appendChild(playerContainer);
+  main.appendChild(shipsContainer);
+
+  messageDiv.classList.add("message");
+  shipsDiv.classList.add("ships");
+  rotateShipBtn.classList.add("rotate-btn");
+  rotateShipBtn.id = "rotateShipBtn";
+  rotateShipBtn.textContent = "Rotate ship";
+
+  shipsContainer.appendChild(messageDiv);
+  shipsContainer.appendChild(shipsDiv);
+  shipsContainer.appendChild(rotateShipBtn);
+}
+
 function initGamePage() {
   const main = document.querySelector(".main");
   const playerContainer = document.createElement("div");
@@ -21,6 +51,8 @@ function initGamePage() {
 
   playerContainer.id = "playerContainer";
   computerContainer.id = "computerContainer";
+
+  main.textContent = "";
 
   main.appendChild(playerContainer);
   main.appendChild(computerContainer);
@@ -207,6 +239,7 @@ function overlayContainers() {
 }
 
 export {
+  initPlaceShipPage,
   initGamePage,
   gameboardContainer,
   createGameboard,
