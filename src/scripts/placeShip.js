@@ -19,13 +19,8 @@ const listOfShips = [
   { name: "Cruiser", length: 2, img: "../../dist/assets/ships/ship-1.png" },
 ];
 
-playerGameboard.placeShip(0, 0, 5, 0);
-
-let currentIndex = 1; // Track the current ship index
+let currentIndex = 0; // Track the current ship index
 let currentDirection = 0; // 0 for Horizontal, 1 for Vertical
-
-console.log("checking the Gameboard", playerGameboard.getBoard());
-console.log("Checking the cell [0][5] if Valid", playerGameboard.isValidPlacement(0, 5, 4, 0));
 
 function clearOverlay() {
   const playerContainer = document.getElementById("playerContainer");
@@ -58,8 +53,6 @@ function highlightShip() {
   const shipContainer = document.querySelector(".ships");
   const ships = shipContainer.querySelectorAll("img");
 
-  console.log("Highlight Container", currentIndex);
-
   if (currentIndex > 4) {
     ships[currentIndex - 1].classList.remove("highlight");
     ships[currentIndex - 1].classList.add("fade");
@@ -88,7 +81,36 @@ function addCellListeners() {
 
   cells.forEach((cell) => {
     cell.addEventListener("mouseover", () => handleCellHover(cell));
+    cell.addEventListener("click", () => handleCellClick(cell));
   });
+}
+
+function handleCellClick(cell) {
+  if (currentIndex > 4) return;
+
+  const dataRow = parseInt(cell.dataset.row, 10);
+  const dataCol = parseInt(cell.dataset.col, 10);
+
+  const shipLength = listOfShips[currentIndex].length;
+  const shipDirection = currentDirection;
+
+  if (
+    playerGameboard.isValidPlacement(
+      dataRow,
+      dataCol,
+      shipLength,
+      shipDirection,
+    )
+  ) {
+    playerGameboard.placeShip(dataRow, dataCol, shipLength, shipDirection);
+    updateGameboard(playerGameboard.getBoard(), "playerGameboard");
+
+    currentIndex++;
+
+    clearCellHighlights();
+    displayMessage();
+    highlightShip();
+  }
 }
 
 function handleCellHover(cell) {
@@ -109,15 +131,10 @@ function handleCellHover(cell) {
     )
   ) {
     highlightCell(dataRow, dataCol);
-    console.log("VALID!");
   } else {
     clearCellHighlights();
     cell.classList.add("invalid-cell");
-    console.log("Invalid cell Placement detected.");
-    console.log(cell);
   }
-
-  console.log(playerGameboard.getBoard());
 }
 
 function highlightCell(row, col) {
@@ -128,7 +145,6 @@ function highlightCell(row, col) {
     currentShip.length,
     currentDirection,
   );
-  console.log(cellsToHighlight);
 
   clearCellHighlights();
 
