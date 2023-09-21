@@ -5,6 +5,7 @@ import {
   createGameboard,
   updateGameboard,
 } from "./dom";
+import { initGame } from "./game";
 
 const playerGameboard = new Gameboard();
 const listOfShips = [
@@ -32,11 +33,31 @@ function displayMessage() {
   const currentShip = listOfShips[currentIndex];
   const messageDiv = document.querySelector(".message");
 
-  if (currentIndex > 4) {
-    messageDiv.textContent = `Lets Play the Game Now!`;
-  } else {
-    messageDiv.textContent = `Placing the ${currentShip.name}...`;
-  }
+  messageDiv.textContent = `Placing the ${currentShip.name}...`;
+}
+
+function proceedGame() {
+  const container = document.getElementById("shipsContainer");
+
+  const messageDiv = container.querySelector(".message");
+  messageDiv.textContent = `Lets Play the Game Now!`;
+
+  const shipContainer = container.querySelector(".ships");
+  const ships = shipContainer.querySelectorAll("img");
+
+  ships[currentIndex - 1].classList.remove("highlight");
+  ships[currentIndex - 1].classList.add("fade");
+
+  const rotateBtn = document.getElementById("rotateShipBtn");
+  container.removeChild(rotateBtn);
+
+  const proceedBtn = document.createElement("button");
+  proceedBtn.id = "proceedBtn";
+  proceedBtn.classList.add("proceed-btn")
+  proceedBtn.textContent = "Play Now!";
+  container.appendChild(proceedBtn);
+
+  clickLoadGame();
 }
 
 function createShipElements() {
@@ -53,17 +74,21 @@ function highlightShip() {
   const shipContainer = document.querySelector(".ships");
   const ships = shipContainer.querySelectorAll("img");
 
-  if (currentIndex > 4) {
-    ships[currentIndex - 1].classList.remove("highlight");
-    ships[currentIndex - 1].classList.add("fade");
-  } else {
-    ships[currentIndex].classList.add("highlight");
-  }
+  ships[currentIndex].classList.add("highlight");
 
   for (let i = 0; i < currentIndex; i++) {
     ships[i].classList.add("fade");
     ships[i].classList.remove("highlight");
   }
+}
+
+function clickLoadGame() {
+  const proceedBtn = document.getElementById("proceedBtn");
+  
+  proceedBtn.addEventListener("click", () => {
+    console.log("Moving to the game!!!!");
+    initGame();
+  }); 
 }
 
 function changeDirection() {
@@ -104,12 +129,16 @@ function handleCellClick(cell) {
   ) {
     playerGameboard.placeShip(dataRow, dataCol, shipLength, shipDirection);
     updateGameboard(playerGameboard.getBoard(), "playerGameboard");
+    clearCellHighlights();
 
     currentIndex++;
 
-    clearCellHighlights();
-    displayMessage();
-    highlightShip();
+    if (currentIndex > 4) {
+      proceedGame();
+    } else {
+      displayMessage();
+      highlightShip();
+    }
   }
 }
 

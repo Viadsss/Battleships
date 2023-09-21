@@ -154,7 +154,7 @@ function updateGameboard(board, id, hideShips = false) {
     // computer Board
     if (hideShips) {
       if (board[row][col] === "SHIP") {
-        cell.textContent = "SHIP";
+        // display nothing on ship
       } else if (board[row][col] === "miss") {
         img.src = assets.miss;
         img.alt = "miss";

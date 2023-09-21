@@ -93,7 +93,7 @@ body {
   gap: 0.5rem;
 }
 
-.rotate-btn {
+.rotate-btn, .proceed-btn {
   font-family: Jost;
   font-size: 1rem;
   padding: 0.5rem 1rem;
