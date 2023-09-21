@@ -111,6 +111,14 @@ body {
   padding: 0.5rem 1rem;
 }
 
+.hovered-cell {
+  background: rgba(97, 198, 255, 0.8) !important; 
+}
+
+.invalid-cell {
+  cursor: not-allowed;
+}
+
 /* end of exclusive styling for placeShip.js */
 
 .info-player {

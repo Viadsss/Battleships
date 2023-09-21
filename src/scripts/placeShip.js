@@ -1,6 +1,12 @@
 import Gameboard from "./gameboard";
-import { initPlaceShipPage, gameboardContainer, createGameboard } from "./dom";
+import {
+  initPlaceShipPage,
+  gameboardContainer,
+  createGameboard,
+  updateGameboard,
+} from "./dom";
 
+const playerGameboard = new Gameboard();
 const listOfShips = [
   {
     name: "Aircraft Carrier",
@@ -13,16 +19,29 @@ const listOfShips = [
   { name: "Cruiser", length: 2, img: "../../dist/assets/ships/ship-1.png" },
 ];
 
+playerGameboard.placeShip(0, 0, 5, 0);
+
+let currentIndex = 1; // Track the current ship index
+let currentDirection = 0; // 0 for Horizontal, 1 for Vertical
+
+console.log("checking the Gameboard", playerGameboard.getBoard());
+console.log("Checking the cell [0][5] if Valid", playerGameboard.isValidPlacement(0, 5, 4, 0));
+
 function clearOverlay() {
   const playerContainer = document.getElementById("playerContainer");
   const overlay = playerContainer.querySelector(".overlay");
   overlay.classList.remove("overlay");
 }
 
-function displayMessage(index) {
-  const currentShip = listOfShips[index];
+function displayMessage() {
+  const currentShip = listOfShips[currentIndex];
   const messageDiv = document.querySelector(".message");
-  messageDiv.textContent = `Placing the ${currentShip.name}...`;
+
+  if (currentIndex > 4) {
+    messageDiv.textContent = `Lets Play the Game Now!`;
+  } else {
+    messageDiv.textContent = `Placing the ${currentShip.name}...`;
+  }
 }
 
 function createShipElements() {
@@ -35,42 +54,129 @@ function createShipElements() {
   });
 }
 
-function highlightShip(index) {
+function highlightShip() {
   const shipContainer = document.querySelector(".ships");
   const ships = shipContainer.querySelectorAll("img");
 
-  ships[index].classList.add("highlight");
+  console.log("Highlight Container", currentIndex);
 
-  for (let i = 0; i < index; i++) {
+  if (currentIndex > 4) {
+    ships[currentIndex - 1].classList.remove("highlight");
+    ships[currentIndex - 1].classList.add("fade");
+  } else {
+    ships[currentIndex].classList.add("highlight");
+  }
+
+  for (let i = 0; i < currentIndex; i++) {
     ships[i].classList.add("fade");
     ships[i].classList.remove("highlight");
   }
 }
 
-function changeDirection(direction) {
+function changeDirection() {
   const rotateBtn = document.getElementById("rotateShipBtn");
 
   rotateBtn.addEventListener("click", () => {
-    direction = (direction + 1) % 2;
+    currentDirection = (currentDirection + 1) % 2;
+  });
+}
 
-    return direction;
+// cells hovering related functions
+
+function addCellListeners() {
+  const cells = document.querySelectorAll(".cell");
+
+  cells.forEach((cell) => {
+    cell.addEventListener("mouseover", () => handleCellHover(cell));
+  });
+}
+
+function handleCellHover(cell) {
+  if (currentIndex > 4) return;
+
+  const dataRow = parseInt(cell.dataset.row, 10);
+  const dataCol = parseInt(cell.dataset.col, 10);
+
+  const shipLength = listOfShips[currentIndex].length;
+  const shipDirection = currentDirection;
+
+  if (
+    playerGameboard.isValidPlacement(
+      dataRow,
+      dataCol,
+      shipLength,
+      shipDirection,
+    )
+  ) {
+    highlightCell(dataRow, dataCol);
+    console.log("VALID!");
+  } else {
+    clearCellHighlights();
+    cell.classList.add("invalid-cell");
+    console.log("Invalid cell Placement detected.");
+    console.log(cell);
+  }
+
+  console.log(playerGameboard.getBoard());
+}
+
+function highlightCell(row, col) {
+  const currentShip = listOfShips[currentIndex];
+  const cellsToHighlight = getCellsToHighlight(
+    row,
+    col,
+    currentShip.length,
+    currentDirection,
+  );
+  console.log(cellsToHighlight);
+
+  clearCellHighlights();
+
+  cellsToHighlight.forEach((cell) => {
+    cell.classList.add("hovered-cell");
+  });
+}
+
+function getCellsToHighlight(row, col, shipLength) {
+  const cells = document.querySelectorAll(".cell");
+  const cellsToHighlight = [];
+
+  for (let i = 0; i < shipLength; i++) {
+    let cellIndex;
+
+    if (currentDirection === 0) {
+      cellIndex = parseInt(`${row}${col}`) + i;
+    } else if (currentDirection === 1) {
+      cellIndex = i * 10 + parseInt(`${row}${col}`);
+    }
+
+    cellsToHighlight.push(cells[cellIndex]);
+  }
+  return cellsToHighlight;
+}
+
+function clearCellHighlights() {
+  const cells = document.querySelectorAll(".cell");
+
+  cells.forEach((cell) => {
+    cell.classList.remove("hovered-cell");
+    cell.classList.remove("invalid-cell");
   });
 }
 
 function initPlaceShip() {
-  let currentIndex = 0; // Track the current ship index
-  let currentDirection = 0; // 0 for Horizontal, 1 for Vertical
-
   initPlaceShipPage();
 
   gameboardContainer("playerContainer");
   createGameboard("playerGameboard", 10);
   clearOverlay();
 
-  displayMessage(currentIndex); // dependent on currentShip.name
+  displayMessage();
   createShipElements();
-  highlightShip(currentIndex); // dependent on currentIndex
-  currentDirection = changeDirection(currentDirection);
+  highlightShip();
+  changeDirection();
+
+  addCellListeners();
 }
 
 export default initPlaceShip;

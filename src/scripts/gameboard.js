@@ -35,14 +35,14 @@ class Gameboard {
     if (direction === 0) {
       if (y + len > 10) return false; // Out of bonds in horizontal
 
-      for (let i = x; i < x + len; i++) {
+      for (let i = y; i < y + len; i++) {
         if (this.board[x][i] === "SHIP") return false; // Conflict with existing ship at x=${x}, y=${i}
       }
     } else if (direction === 1) {
       if (x + len > 10) return false; // Out of bonds in vertical
 
-      for (let i = y; i < y + len; i++) {
-        if (this.board[x][i] === "SHIP") return false; // Conflict with existing ship at x=${x}, y=${i}
+      for (let i = x; i < x + len; i++) {
+        if (this.board[i][y] === "SHIP") return false; // Conflict with existing ship at x=${x}, y=${i}
       }
     } else return false; // Invalid direction
 

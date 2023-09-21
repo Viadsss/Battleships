@@ -44,6 +44,14 @@ describe("Gameboard Test", () => {
     expect(isValid).toBe(false);
   });
 
+  it("should return true for placing horizontal ship placement beside the 1st ship", () => {
+    // Place a ship horizontally at (3, 2) with a length of 3
+    board.placeShip(3, 2, 3, 0);
+    // Attempt to place another ship horizontally at (3, 3) with a length of 2 (beside)
+    const isValid = board.isValidPlacement(3, 6, 2, 0);
+    expect(isValid).toBe(true);
+  });
+
   it("should return true for valid vertical ship placement", () => {
     // Place a ship vertically at (4, 5) with a length of 4
     const isValid = board.isValidPlacement(4, 5, 4, 1);
