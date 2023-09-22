@@ -255,7 +255,6 @@ describe("Gameboard Test", () => {
       const { coords, ship } = shipInfo;
 
       // Ensure the ship's length matches the expected length
-      // console.log(ship, coords);
       expect(ship.length).toBe(coords.length);
     }
   });

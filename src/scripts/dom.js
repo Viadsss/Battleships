@@ -11,7 +11,55 @@ const assets = {
   githubLogo: "../../dist/assets/github-logo.svg",
 };
 
+function handlePageTransition() {
+  const main = document.querySelector(".main");
+
+  main.classList.add("animate");
+  if (main.classList.contains("animate")) {
+    main.addEventListener("animationend", () => {
+      main.classList.remove("animate");
+      return true;
+    });
+  }
+}
+
+function initLoadingPage() {
+  handlePageTransition();
+
+  const main = document.querySelector(".main");
+  const loadingContainer = document.createElement("div");
+  const titleText = document.createElement("p");
+  const titleImg = document.createElement("img");
+  const loadingBar = document.createElement("div");
+  const loadingStatus = document.createElement("div");
+  const loadingText = document.createElement("p");
+
+  main.classList.add("darken");
+  main.appendChild(loadingContainer);
+  loadingContainer.id = "loadingContainer";
+
+  titleText.textContent = "THE CLASSIC NAVAL COMBAT GAME";
+  titleText.classList.add("title-text");
+
+  titleImg.src = assets.logoText;
+  titleImg.classList.add("title-img");
+
+  loadingBar.classList.add("loading-bar");
+  loadingStatus.classList.add("loading-status");
+  loadingBar.appendChild(loadingStatus);
+
+  loadingText.textContent = "LOADING...";
+  loadingText.classList.add("loading-text");
+
+  loadingContainer.appendChild(titleText);
+  loadingContainer.appendChild(titleImg);
+  loadingContainer.appendChild(loadingBar);
+  loadingContainer.appendChild(loadingText);
+}
+
 function initPlaceShipPage() {
+  handlePageTransition();
+
   const main = document.querySelector(".main");
   const playerContainer = document.createElement("div");
   const shipsContainer = document.createElement("div");
@@ -27,6 +75,7 @@ function initPlaceShipPage() {
 
   main.textContent = "";
 
+  main.classList.remove("darken");
   main.appendChild(playerContainer);
   main.appendChild(shipsContainer);
 
@@ -42,6 +91,8 @@ function initPlaceShipPage() {
 }
 
 function initGamePage() {
+  handlePageTransition();
+
   const main = document.querySelector(".main");
   const playerContainer = document.createElement("div");
   const computerContainer = document.createElement("div");
@@ -56,6 +107,26 @@ function initGamePage() {
 
   main.appendChild(playerContainer);
   main.appendChild(computerContainer);
+}
+
+function winnerOverlay(winner) {
+  const main = document.querySelector(".main");
+  const winnerOverlay = document.createElement("div");
+  const winnerContainer = document.createElement("div");
+
+  winnerOverlay.classList.add("winner-overlay");
+  
+  winnerContainer.classList.add("winner-container");
+
+  if (winner === "player") {
+    winnerContainer.textContent = "🎊🎉 Congrats! You Win!😊 🎉🎊";
+  } else if (winner === "computer") {
+    winnerContainer.textContent = "You Lost 😞😥 Better Luck next time!🍀";
+  }
+
+  main.appendChild(winnerOverlay);
+  winnerOverlay.appendChild(winnerContainer);
+
 }
 
 function gameboardContainer(id) {
@@ -158,7 +229,6 @@ function updateGameboard(board, id, hideShips = false) {
       } else if (board[row][col] === "miss") {
         img.src = assets.miss;
         img.alt = "miss";
-        console.log("computer board miss");
       } else if (board[row][col] === "hit") {
         img.src = assets.hit;
         img.alt = "hit";
@@ -192,14 +262,12 @@ function updateGameboard(board, id, hideShips = false) {
 }
 
 function clickHandler(e) {
-  console.log(e.target);
   if (e.target.classList.contains("cell")) {
     const cell = e.target;
     const row = parseInt(cell.dataset.row, 10);
     const col = parseInt(cell.dataset.col, 10);
 
     if (!cell.classList.contains("clicked")) {
-      console.log("Row:", row, "Col:", col);
       handlePlayerMove(row, col); // callback
       cell.classList.add("clicked");
     }
@@ -221,8 +289,6 @@ function removeCellClickListener() {
 
   if (computerGameboard) {
     computerGameboard.removeEventListener("click", clickHandler);
-    console.log("Should remove the event Listener clickHandler");
-    console.log(computerGameboard);
   }
 }
 
@@ -247,4 +313,6 @@ export {
   addCellClickListener,
   removeCellClickListener,
   overlayContainers,
+  initLoadingPage,
+  winnerOverlay
 };

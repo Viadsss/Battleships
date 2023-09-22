@@ -3,7 +3,7 @@ import {
   initPlaceShipPage,
   gameboardContainer,
   createGameboard,
-  updateGameboard,
+  updateGameboard
 } from "./dom";
 import { initGame } from "./game";
 
@@ -88,7 +88,6 @@ function clickLoadGame() {
   const proceedBtn = document.getElementById("proceedBtn");
 
   proceedBtn.addEventListener("click", () => {
-    console.log("Moving to the game!!!!");
     initGame(playerShips);
   });
 }

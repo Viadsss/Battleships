@@ -22,6 +22,8 @@ body {
 .content {
   min-height: 100vh;
   background-color: #f2f3f5;
+  display: grid;
+  grid-template-rows: auto 1fr;
 }
 
 .header {
@@ -52,10 +54,71 @@ body {
 .main {
   display: grid;
   grid-template-rows: 1fr 1fr;
-  place-content: center;
-  padding-top: 2rem;
-  gap: 2rem;
+  place-items: center;
+  column-gap: 2rem;
 }
+
+/* start of exclusive styling for loading page */
+.darken {
+  background-color: black;
+}
+
+#loadingContainer {
+  grid-column: 1 / span 2;
+  grid-row: 1 / span 2;
+  padding: 0 5rem;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+#loadingContainer > .title-text {
+  text-align: center;
+  letter-spacing: 0.2rem;
+  color: #faec00;
+}
+
+#loadingContainer > .title-img {
+  width: 40rem;
+  max-width: 100%;
+  padding: 0 3rem;
+  filter: brightness(0) invert(1);
+}
+
+#loadingContainer > .loading-bar {
+  width: 100%;
+  height: 3rem;
+  border: 0.125rem solid white;
+  border-radius: 0.75rem;
+  margin-top: 3rem;
+  padding: 0.25rem;
+}
+
+.loading-bar > .loading-status {
+  min-height: 100%;
+  background-color: #f05;
+  border-radius: 0.5rem;
+  animation: loading 4s ease-in-out;
+}
+
+#loadingContainer > .loading-text {
+  font-size: 1.5rem;
+  letter-spacing: 0.2rem;
+}
+
+@keyframes loading {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+/* end of exclusive styling for loading page */
 
 .gameboard-container {
   position: relative;
@@ -74,6 +137,7 @@ body {
 .ships-container {
   display: flex;
   flex-direction: column;
+  align-self: start;
   align-items: center;
   justify-content: center;
   gap: 1rem;
@@ -93,7 +157,8 @@ body {
   gap: 0.5rem;
 }
 
-.rotate-btn, .proceed-btn {
+.rotate-btn,
+.proceed-btn {
   font-family: Jost;
   font-size: 1rem;
   padding: 0.5rem 1rem;
@@ -112,7 +177,7 @@ body {
 }
 
 .hovered-cell {
-  background: rgba(97, 198, 255, 0.8) !important; 
+  background: rgba(97, 198, 255, 0.8) !important;
 }
 
 .invalid-cell {
@@ -218,6 +283,45 @@ body {
   display: none;
 }
 
+.animate {
+  animation: transitionIn 1s ease-in;
+}
+
+.winner-overlay {
+  position: absolute;
+  background-color: rgba(88, 88, 88, 0.3);
+  display: grid;
+  place-content: center;
+  border-radius: 1rem;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.winner-container {
+  background-color: white;
+  padding: 1rem;
+  box-shadow:
+    rgba(0, 0, 0, 0.16) 0px 3px 6px,
+    rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  border-radius: 1rem;
+  width: max-content;
+  height: max-content;
+}
+
+@keyframes transitionIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @media screen and (min-width: 640px) {
 }
 
@@ -236,7 +340,7 @@ body {
   }
 
   #shipsContainer {
-    justify-self: center;
+    align-self: center;
   }
 }
 

@@ -9,6 +9,7 @@ import {
   addCellClickListener,
   removeCellClickListener,
   overlayContainers,
+  winnerOverlay,
 } from "./dom";
 
 const boardSize = 10;
@@ -18,58 +19,6 @@ const player = new Player("Player", computerGameboard);
 const computer = new Computer("Computer", playerGameboard);
 
 let playerTurn = true;
-
-// function promptCoordinates(shipInfo) {
-//   while (true) {
-//     const coordinates = prompt(
-//       `Enter coordinates for your ${shipInfo.name} with a length of ${shipInfo.length} in a [0-9] by [0-9] grid
-//       \n[example => 3, 4]:`,
-//     );
-//     if (!coordinates) {
-//       alert("Please enter coordinates for your ship.");
-//       continue;
-//     }
-
-//     const [x, y] = coordinates
-//       .split(",")
-//       .map((coord) => parseInt(coord.trim(), 10));
-//     if (isNaN(x) || isNaN(y)) {
-//       alert(
-//         "Invalid coordinates. Please enter valid numbers seperated by a coma.",
-//       );
-//       continue;
-//     }
-
-//     return [x, y];
-//   }
-// }
-
-// function promptDirection(shipInfo) {
-//   while (true) {
-//     const direction = prompt(
-//       `Enter direction for your ${shipInfo.name} (0 for horizontal, 1 for vertical):`,
-//     );
-//     if (direction === "0" || direction === "1") {
-//       return parseInt(direction);
-//     }
-//     alert("Invalid direction");
-//   }
-// }
-
-// function placePlayerShip(shipInfo) {
-//   while (true) {
-//     const [x, y] = promptCoordinates(shipInfo);
-//     const direction = promptDirection(shipInfo);
-
-//     if (playerGameboard.isValidPlacement(x, y, shipInfo.length, direction)) {
-//       playerGameboard.placeShip(x, y, shipInfo.length, direction);
-//       updateGameboard(playerGameboard.getBoard(), "playerGameboard");
-//       return;
-//     } else {
-//       alert("Invalid placement. Please try again");
-//     }
-//   }
-// }
 
 function placePlayerShips(playerShips) {
   for (const shipInfo of playerShips) {
@@ -105,16 +54,13 @@ function handlePlayerMove(row, col) {
   const attackResult = player.attack(row, col);
 
   updateGameboard(computerGameboard.getBoard(), "computerGameboard", true);
-  console.log(
-    "Computer Board after player Attacks:",
-    computerGameboard.getBoard(),
-  );
 
-  if (computerGameboard.gameover()) console.log("Player wins the game!");
-  else console.log("Player attacks result:", attackResult);
+  if (computerGameboard.gameover()) {
+    winnerOverlay("player");
+    return;
+  }
 
   if (attackResult === "hit") {
-    console.log("Player gets another turn!");
     return;
   }
 
@@ -134,16 +80,13 @@ function handleComputerMove() {
   const attackResult = computer.attackRandom();
 
   updateGameboard(playerGameboard.getBoard(), "playerGameboard");
-  console.log(
-    "Player Board after computer Attacks:",
-    playerGameboard.getBoard(),
-  );
 
-  if (playerGameboard.gameover()) console.log("Computer wins the game!");
-  else console.log("Computer attacks result:", attackResult);
+  if (playerGameboard.gameover()) {
+    winnerOverlay("computer");
+    return;
+  }
 
   if (attackResult === "hit") {
-    console.log("Computer gets another turn!");
     setTimeout(() => {
       handleComputerMove();
     }, 2000);

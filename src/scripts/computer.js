@@ -7,7 +7,6 @@ class Computer {
 
   attackRandom() {
     if (!this.enemyGameboard) {
-      console.log("Error: Enemy Gameboard not set");
       return;
     }
     let x, y;
