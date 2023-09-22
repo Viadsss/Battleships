@@ -7,6 +7,8 @@ import {
 } from "./dom";
 import { initGame } from "./game";
 
+const playerShips = [];
+
 const playerGameboard = new Gameboard();
 const listOfShips = [
   {
@@ -53,7 +55,7 @@ function proceedGame() {
 
   const proceedBtn = document.createElement("button");
   proceedBtn.id = "proceedBtn";
-  proceedBtn.classList.add("proceed-btn")
+  proceedBtn.classList.add("proceed-btn");
   proceedBtn.textContent = "Play Now!";
   container.appendChild(proceedBtn);
 
@@ -84,11 +86,11 @@ function highlightShip() {
 
 function clickLoadGame() {
   const proceedBtn = document.getElementById("proceedBtn");
-  
+
   proceedBtn.addEventListener("click", () => {
     console.log("Moving to the game!!!!");
-    initGame();
-  }); 
+    initGame(playerShips);
+  });
 }
 
 function changeDirection() {
@@ -130,6 +132,13 @@ function handleCellClick(cell) {
     playerGameboard.placeShip(dataRow, dataCol, shipLength, shipDirection);
     updateGameboard(playerGameboard.getBoard(), "playerGameboard");
     clearCellHighlights();
+
+    playerShips.push({
+      row: dataRow,
+      col: dataCol,
+      length: shipLength,
+      direction: shipDirection,
+    });
 
     currentIndex++;
 
@@ -209,6 +218,10 @@ function clearCellHighlights() {
   });
 }
 
+// function getPlayerShips() {
+//   return playerShips;
+// }
+
 function initPlaceShip() {
   initPlaceShipPage();
 
@@ -224,4 +237,4 @@ function initPlaceShip() {
   addCellListeners();
 }
 
-export default initPlaceShip;
+export { initPlaceShip };

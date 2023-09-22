@@ -1,5 +1,5 @@
 import "./styles.css";
-import initPlaceShip from "./scripts/placeShip";
+import { initPlaceShip } from "./scripts/placeShip";
 import { initGame } from "./scripts/game.js";
 
 initPlaceShip();
