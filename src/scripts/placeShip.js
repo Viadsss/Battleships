@@ -14,12 +14,12 @@ const listOfShips = [
   {
     name: "Aircraft Carrier",
     length: 5,
-    img: "../../dist/assets/ships/ship-5.png",
+    img: "assets/ships/ship-5.png",
   },
-  { name: "Destroyer", length: 4, img: "../../dist/assets/ships/ship-4.png" },
-  { name: "Battleship", length: 3, img: "../../dist/assets/ships/ship-3.png" },
-  { name: "Destroyer", length: 3, img: "../../dist/assets/ships/ship-2.png" },
-  { name: "Cruiser", length: 2, img: "../../dist/assets/ships/ship-1.png" },
+  { name: "Destroyer", length: 4, img: "assets/ships/ship-4.png" },
+  { name: "Battleship", length: 3, img: "assets/ships/ship-3.png" },
+  { name: "Destroyer", length: 3, img: "assets/ships/ship-2.png" },
+  { name: "Cruiser", length: 2, img: "assets/ships/ship-1.png" },
 ];
 
 let currentIndex = 0; // Track the current ship index

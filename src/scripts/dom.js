@@ -2,13 +2,13 @@ import { handlePlayerMove } from "./game";
 // importing for the callback of clickHandler to response for Player Move
 
 const assets = {
-  ship: "../../dist/assets/ship.svg",
-  hit: "../../dist/assets/hit.svg",
-  miss: "../../dist/assets/miss.svg",
-  sunk: "../../dist/assets/sunk.svg",
-  logoImg: "../../dist/assets/battleship-logo.png",
-  logoText: "../../dist/assets/battleship-text-logo.svg",
-  githubLogo: "../../dist/assets/github-logo.svg",
+  ship: "assets/ship.svg",
+  hit: "assets/hit.svg",
+  miss: "assets/miss.svg",
+  sunk: "assets/sunk.svg",
+  logoImg: "assets/battleship-logo.png",
+  logoText: "assets/battleship-text-logo.svg",
+  githubLogo: "assets/github-logo.svg",
 };
 
 function handlePageTransition() {
