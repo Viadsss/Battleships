@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "deploy": "git subtree push --prefix dist origin gh-pages",
     "dev": "webpack --watch",
     "build": "webpack --mode production",
+    "deploy": "git subtree push --prefix dist origin gh-pages",
     "test": "jest"
   },
   "keywords": [],
